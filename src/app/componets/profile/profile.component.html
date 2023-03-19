@@ -1,0 +1,153 @@
+
+<section  class="pt-5" id="profile" >
+    <div class="container pt-5">
+
+      <div *ngIf="!isLoad" class="row">
+        <div class="col-md-12 text-center">
+          <i class="fas fa-fan fa-5x fa-spin text-white"></i>
+        </div>
+
+      </div>
+        <div *ngIf="isLoad" class="row overflow-auto">
+          
+            <div class="col-md-12">
+                <button  class="btn btn-primary float-right" data-toggle="modal" data-target="#AddNote">Add Note</button>
+            </div>
+
+            <!------------- Display User All Notes ---------->
+            <div *ngFor="let note of AllNotes" class="col-xl-3 col-lg-4 col-md-6">
+                <div class="note p-3 text-center  my-3">
+                  
+                  <div class="row">
+                    <div class="col-md-12">
+                      <i class="fas fa-ellipsis-v float-right p-2"data-toggle="dropdown"></i>
+                      
+                      <div class="dropdown">
+
+                        <div class="dropdown-menu">
+                          <a (click)="getID(note._id);setValue()" class="dropdown-item" href="#"data-toggle="modal" data-target="#EditNote"><span>Edit</span><i class="fas fa-pen-square text-info float-right fa-lg mt-1"></i></a>
+                          <a (click)="getID(note._id)" class="dropdown-item" href="#"data-toggle="modal" data-target="#DeleteNote"><span>Delete</span><i class="fas fa-trash text-danger float-right fa-lg mt-1"></i></a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <h2>{{note.title}}</h2>
+                  <p>{{note.desc}}</p>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+
+<!-- ===========================Modals ============================= -->
+
+
+<!------------------------------------Add Modal ----------------------------->
+<div class="modal fade" id="AddNote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <form [formGroup]="AddNote" (ngSubmit)="addData()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Note</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+    
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+    
+                        <input formControlName="title" type="text" placeholder="Title" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                      
+                        <textarea formControlName="desc" placeholder="Add Description" class="form-control my-2" id="" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+            </div>
+    
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-info">Add Note</button>
+            <button type="button" class="btn btn-danger btn" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </form>
+  </div>
+</div>
+
+
+
+<!---------------------------------------- Edit Modal -------------------------=-->
+<div class="modal fade" id="EditNote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <form [formGroup]="editNote" (ngSubmit)="EditNote()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Note</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+    
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input formControlName="title" type="text" placeholder="Title" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <textarea formControlName="desc" placeholder="Add Description" class="form-control my-2" id="" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+            </div>
+    
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-info">Save</button>
+            <button type="button"(click)="setValue()" class="btn btn-danger btn" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </form>
+  </div>
+</div>
+
+<!---------------------------------------- Delete Modal -------------------------=-->
+<div *ngIf=" isDeleted" class="modal fade" id="DeleteNote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-info text-center">Do you realy want to delete ?<br>
+                process cannot be undone
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button (click)="deleteNote()" type="button" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-info btn" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

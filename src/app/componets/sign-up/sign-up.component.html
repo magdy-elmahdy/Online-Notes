@@ -1,0 +1,43 @@
+<section id="signUp">
+    <div class="container" >
+        <form [formGroup]="signup" (ngSubmit)="formData()" class="w-50">
+            <div class="row">
+                <div class="col-md-6">
+                    <input formControlName="first_name"[class.is-valid]="signup.controls.first_name.status=='VALID'" class="form-control mt-3" placeholder="Enter First Name"  type="text">
+                    <div *ngIf="signup.controls.first_name.errors && signup.controls.first_name.touched" class="alert alert-danger">
+                        First Name is Required
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <input formControlName="last_name"[class.is-valid]="signup.controls.last_name.status=='VALID'" class="form-control mt-3" placeholder="Enter Last Name"  type="text">
+                    <div *ngIf="signup.controls.last_name.errors && signup.controls.last_name.touched" class="alert alert-danger">
+                        Last Name is Required
+                    </div>
+                </div>
+            </div>
+
+            <input formControlName="email" type="email"[class.is-valid]="signup.controls.email.status=='VALID'" class="form-control mt-3" placeholder="Enter your Email">
+            <div *ngIf="signup.controls.email.errors && signup.controls.email.touched" class="alert alert-danger">
+                 Email is Required
+            </div>
+
+            <input formControlName="age" type="text"[class.is-valid]="signup.controls.age.status=='VALID'" class="form-control mt-3" placeholder="Enter your Age">
+            <div *ngIf="signup.controls.age.errors && signup.controls.age.touched" class="alert alert-danger">
+                Age is Required
+           </div>
+
+            <input formControlName="password" type="password"[class.is-valid]="signup.controls.password.status=='VALID'" class="form-control mt-3" placeholder="Enter your Password">
+            <div *ngIf="signup.controls.password.errors && signup.controls.password.touched" class="alert alert-danger">
+                Password is Required
+           </div>
+
+            <button type="submit" [disabled]="signup.status=='INVALID'" [ngStyle]="signup.invalid ?isStyleInvalid:isStylevalid" class="w-100 btn btn-primary mt-3" ><span *ngIf="! isClicked" >Sign Up</span><span *ngIf="isClicked" >Waiting....</span></button>
+           <div *ngIf="isSuccess" class="alert alert-success text-center" >
+                {{responseMsg}}
+           </div>
+           <div *ngIf="isUniqueEmail" class="alert alert-info text-center">
+                    {{isUniqueEmailMessage}}
+           </div>
+        </form>
+    </div>
+</section>
